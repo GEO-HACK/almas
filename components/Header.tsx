@@ -9,6 +9,18 @@ import { navLinks } from "@/lib/site";
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // On the home page the header floats over the hero photo until you scroll.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    const frame = requestAnimationFrame(onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -20,12 +32,19 @@ export default function Header() {
   }, [open]);
 
   const close = () => setOpen(false);
+  const overHero = pathname === "/" && !scrolled && !open;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur supports-[backdrop-filter]:bg-paper/80">
+    <header
+      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+        overHero
+          ? "border-white/15 bg-transparent"
+          : "border-line bg-paper/90 backdrop-blur supports-[backdrop-filter]:bg-paper/80"
+      }`}
+    >
       <div className="container-site flex h-16 items-center justify-between gap-6 md:h-20">
         <Link href="/" onClick={close} aria-label="Al-Mas Advisory, home" className="shrink-0">
-          <Logo />
+          <Logo tone={overHero ? "light" : "dark"} />
         </Link>
 
         <nav aria-label="Main" className="hidden md:block">
@@ -38,7 +57,13 @@ export default function Header() {
                     href={link.href}
                     aria-current={active ? "page" : undefined}
                     className={`rounded-full px-4 py-2 text-[0.95rem] font-medium transition-colors ${
-                      active ? "bg-surface text-ink" : "text-muted hover:text-ink"
+                      overHero
+                        ? active
+                          ? "bg-white/15 text-paper"
+                          : "text-paper hover:bg-white/10"
+                        : active
+                          ? "bg-surface text-ink"
+                          : "text-muted hover:text-ink"
                     }`}
                   >
                     {link.label}
@@ -63,7 +88,9 @@ export default function Header() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink md:hidden"
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border md:hidden ${
+              overHero ? "border-white/40 text-paper" : "border-line text-ink"
+            }`}
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
