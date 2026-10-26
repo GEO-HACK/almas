@@ -107,7 +107,7 @@ export default function ContactForm() {
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-3xl bg-paper p-8 shadow-card sm:p-10"
+        className="rounded-xl bg-paper p-8 shadow-card sm:p-10"
       >
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink" aria-hidden="true">
           <svg viewBox="0 0 20 20" className="h-6 w-6">
@@ -137,12 +137,12 @@ export default function ContactForm() {
     value: fields[name],
     "aria-invalid": errors[name] ? true : undefined,
     "aria-describedby": errors[name] ? `contact-${name}-error` : undefined,
-    className: `${inputBase} ${errors[name] ? "border-accent" : "border-line hover:border-muted"}`,
+    className: `${inputBase} ${errors[name] ? "border-danger" : "border-line hover:border-muted"}`,
   });
 
   const errorText = (name: keyof ContactFields) =>
     errors[name] ? (
-      <p id={`contact-${name}-error`} className="mt-2 text-sm font-medium text-accent">
+      <p id={`contact-${name}-error`} className="mt-2 text-sm font-medium text-danger">
         {errors[name]}
       </p>
     ) : null;
@@ -152,7 +152,7 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby="contact-form-heading"
-      className="rounded-3xl bg-paper p-6 shadow-card sm:p-10"
+      className="rounded-xl bg-paper p-6 shadow-card sm:p-10"
     >
       <h2 id="contact-form-heading" className="font-display text-3xl font-semibold text-ink">
         Tell us about your property
@@ -164,7 +164,7 @@ export default function ContactForm() {
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="mt-6 rounded-2xl border border-accent/40 bg-accent/5 p-5"
+          className="mt-6 rounded-2xl border border-danger/40 bg-danger/5 p-5"
         >
           <p className="font-semibold text-ink">
             Please check {errorKeys.length === 1 ? "one field" : `${errorKeys.length} fields`} below.
@@ -172,7 +172,7 @@ export default function ContactForm() {
           <ul className="mt-2 list-inside list-disc space-y-1 text-sm">
             {errorKeys.map((key) => (
               <li key={key}>
-                <a href={`#contact-${key}`} className="text-accent underline underline-offset-2">
+                <a href={`#contact-${key}`} className="text-danger underline underline-offset-2">
                   {labels[key]}
                 </a>
               </li>

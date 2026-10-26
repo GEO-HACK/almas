@@ -108,7 +108,7 @@ export default function AboutPage() {
 
           <ul className="mt-12 grid gap-6 md:grid-cols-3">
             {model.map((item) => (
-              <li key={item.title} className="rounded-3xl bg-paper p-8 shadow-card">
+              <li key={item.title} className="rounded-xl bg-paper p-8 shadow-card">
                 <h3 className="font-display text-2xl font-semibold text-ink">{item.title}</h3>
                 <p className="mt-3 text-lg leading-relaxed text-muted">{item.body}</p>
               </li>
@@ -147,7 +147,7 @@ export default function AboutPage() {
           </h2>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((role) => (
-              <li key={role} className="rounded-3xl bg-surface p-6">
+              <li key={role} className="rounded-xl bg-surface p-6">
                 <div
                   className="aspect-[4/3] rounded-2xl bg-line"
                   aria-hidden="true"
@@ -159,7 +159,7 @@ export default function AboutPage() {
             ))}
           </ul>
 
-          <div className="mt-12 rounded-3xl bg-surface p-8">
+          <div className="mt-12 rounded-xl bg-surface p-8">
             <h3 className="font-display text-2xl font-semibold text-ink">Our office</h3>
             <address className="mt-3 not-italic text-lg text-muted">
               Building name, Street, Nairobi, Kenya

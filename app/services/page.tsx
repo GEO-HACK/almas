@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Reveal from "@/components/Reveal";
-import { BuildIllustration, KeepIllustration, VerifyIllustration } from "@/components/ServiceIllustrations";
 import { services, type Service } from "@/lib/services";
 
 export const metadata: Metadata = {
@@ -29,16 +27,10 @@ const steps = [
   },
 ];
 
-const illustrations: Record<Service["id"], React.ReactNode> = {
-  verify: <VerifyIllustration />,
-  build: <BuildIllustration />,
-  keep: <KeepIllustration />,
-};
-
-const themes: Record<Service["id"], { section: string; muted: string; rule: string; reverse: boolean }> = {
-  verify: { section: "bg-paper text-ink", muted: "text-muted", rule: "border-line", reverse: false },
-  build: { section: "bg-ink text-paper", muted: "text-white/70", rule: "border-white/15", reverse: true },
-  keep: { section: "bg-surface text-ink", muted: "text-muted", rule: "border-line", reverse: false },
+const themes: Record<Service["id"], { section: string; muted: string; rule: string }> = {
+  verify: { section: "bg-paper text-ink", muted: "text-muted", rule: "border-line" },
+  build: { section: "bg-ink text-paper", muted: "text-white/70", rule: "border-white/15" },
+  keep: { section: "bg-surface text-ink", muted: "text-muted", rule: "border-line" },
 };
 
 function ServiceSection({ service }: { service: Service }) {
@@ -51,15 +43,15 @@ function ServiceSection({ service }: { service: Service }) {
       className={`scroll-mt-20 ${theme.section}`}
     >
       <div className="container-site py-24 md:py-32">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <Reveal className={theme.reverse ? "lg:order-2" : ""}>
+        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+          <div>
             <h2
               id={`${service.id}-heading`}
-              className="font-display text-6xl font-semibold tracking-tight sm:text-7xl lg:text-8xl"
+              className="font-display text-5xl font-semibold sm:text-6xl"
             >
               {service.name}
             </h2>
-            <p className="mt-5 max-w-lg font-display text-2xl leading-snug sm:text-3xl">{service.promise}</p>
+            <p className="mt-4 max-w-lg text-xl font-semibold leading-snug sm:text-2xl">{service.promise}</p>
             <p className={`mt-6 max-w-lg text-lg leading-relaxed ${theme.muted}`}>{service.intro}</p>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -74,25 +66,17 @@ function ServiceSection({ service }: { service: Service }) {
                 <span className={theme.muted}>{service.billing}</span>
               </p>
             </div>
-          </Reveal>
+          </div>
 
-          <div className={theme.reverse ? "lg:order-1" : ""}>{illustrations[service.id]}</div>
-        </div>
-
-        <Reveal fade={false} className="mt-20">
-          <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {service.items.map((item, index) => (
-              <li
-                key={item.title}
-                className={`fade-up border-t pt-6 ${theme.rule}`}
-                style={{ "--d": `${index * 120}ms` } as React.CSSProperties}
-              >
+          <ul className={`border-b ${theme.rule}`}>
+            {service.items.map((item) => (
+              <li key={item.title} className={`border-t py-6 ${theme.rule}`}>
                 <h3 className="text-lg font-semibold leading-snug">{item.title}</h3>
-                <p className={`mt-3 leading-relaxed ${theme.muted}`}>{item.body}</p>
+                <p className={`mt-2 leading-relaxed ${theme.muted}`}>{item.body}</p>
               </li>
             ))}
           </ul>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -103,24 +87,24 @@ export default function ServicesPage() {
     <>
       <section>
         <div className="container-site py-20 md:py-28">
-          <Reveal>
-            <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+          <div>
+            <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] text-ink sm:text-6xl">
               Every stage of owning property in Kenya, covered.
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">
               Use one service or all three. Each one is built around the same idea: you see proof
               before you take the next step.
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={200}>
+          <div>
             <nav aria-label="Services on this page" className="mt-12">
               <ul className="grid gap-3 sm:grid-cols-3">
                 {services.map((service) => (
                   <li key={service.id}>
                     <a
                       href={`#${service.id}`}
-                      className="group flex items-center justify-between rounded-2xl bg-surface px-6 py-5 transition-colors hover:bg-ink hover:text-paper"
+                      className="group flex items-center justify-between rounded-lg bg-surface px-6 py-5 transition-colors hover:bg-ink hover:text-paper"
                     >
                       <span>
                         <span className="block font-display text-2xl font-semibold">{service.name}</span>
@@ -136,7 +120,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
             </nav>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -146,7 +130,7 @@ export default function ServicesPage() {
 
       <section aria-labelledby="how-heading">
         <div className="container-site py-24 md:py-32">
-          <Reveal className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 id="how-heading" className="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
                 How it works
@@ -159,21 +143,15 @@ export default function ServicesPage() {
             >
               Book your free 30 minute call
             </Link>
-          </Reveal>
+          </div>
 
-          <Reveal fade={false} className="mt-16">
+          <div className="mt-16">
             <ol className="relative grid gap-10 md:grid-cols-4 md:gap-8">
               <span className="absolute left-0 right-0 top-[7px] hidden h-px bg-line md:block" aria-hidden="true" />
-              <span
-                className="grow-x absolute left-0 top-[6px] hidden h-[3px] w-full bg-accent md:block"
-                style={{ "--d": "200ms" } as React.CSSProperties}
-                aria-hidden="true"
-              />
-              {steps.map((step, index) => (
+              {steps.map((step) => (
                 <li
                   key={step.title}
-                  className="fade-up relative border-l border-line pl-8 md:border-l-0 md:pl-0 md:pt-12"
-                  style={{ "--d": `${300 + index * 220}ms` } as React.CSSProperties}
+                  className="relative border-l border-line pl-8 md:border-l-0 md:pl-0 md:pt-12"
                 >
                   <span
                     className="absolute -left-[8px] top-1 h-[15px] w-[15px] rounded-full bg-ink ring-4 ring-paper md:left-0 md:top-0"
@@ -184,7 +162,7 @@ export default function ServicesPage() {
                 </li>
               ))}
             </ol>
-          </Reveal>
+          </div>
 
           <p className="mt-16 text-sm text-muted">
             Prices are indicative. Final fees are confirmed in writing after your consultation.

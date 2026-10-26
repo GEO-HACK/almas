@@ -25,7 +25,7 @@ export default function WorriesBand() {
           The questions every owner abroad asks.
         </h2>
 
-        <ul className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-white/10 sm:grid-cols-2">
+        <ul className="mt-14 grid gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-2">
           {worries.map((worry) => (
             <li key={worry.question} className="bg-ink p-8 md:p-10">
               <h3 className="font-display text-2xl font-semibold leading-snug md:text-[1.7rem]">
