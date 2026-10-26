@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
-import { emailHref, site, whatsappHref } from "@/lib/site";
+import { emailHref, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -29,27 +29,16 @@ export default function ContactPage() {
           <aside aria-labelledby="direct-heading" className="space-y-6">
             <div className="rounded-xl bg-ink p-8 text-paper">
               <h2 id="direct-heading" className="font-display text-2xl font-semibold">
-                Prefer to talk directly?
+                Prefer email?
               </h2>
-              <p className="mt-2 text-white/75">Message us on WhatsApp or send an email.</p>
+              <p className="mt-2 text-white/75">Write to us directly and we will reply.</p>
 
-              <div className="mt-6 flex flex-col gap-3">
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 font-semibold text-paper transition-colors hover:bg-accent-hover"
-                >
-                  WhatsApp {site.whatsappDisplay}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                <a
-                  href={emailHref}
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3.5 font-semibold text-paper transition-colors hover:bg-paper hover:text-ink"
-                >
-                  Email {site.email}
-                </a>
-              </div>
+              <a
+                href={emailHref}
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-6 py-3.5 font-semibold text-paper transition-colors hover:bg-accent-hover"
+              >
+                Email {site.email}
+              </a>
             </div>
 
             <div className="rounded-xl bg-paper p-8 shadow-card">

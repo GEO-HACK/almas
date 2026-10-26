@@ -86,7 +86,7 @@ export default function ContactForm() {
           setErrors(data.errors);
           focusFirstError(data.errors);
         }
-        setServerMessage(data.message ?? "Something went wrong. Please try again, or message us on WhatsApp.");
+        setServerMessage(data.message ?? "Something went wrong. Please try again, or email us directly.");
         setStatus("error");
         return;
       }

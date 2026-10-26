@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { emailHref, navLinks, site, whatsappHref } from "@/lib/site";
+import { emailHref, navLinks, site } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -37,12 +37,6 @@ export default function Footer() {
               <span className="block text-sm text-white/60">Email</span>
               <a href={emailHref} className="hover:text-paper">
                 {site.email}
-              </a>
-            </li>
-            <li>
-              <span className="block text-sm text-white/60">WhatsApp</span>
-              <a href={whatsappHref} className="hover:text-paper" target="_blank" rel="noopener noreferrer">
-                {site.whatsappDisplay}
               </a>
             </li>
             <li className="text-sm text-white/70">{site.location}</li>
