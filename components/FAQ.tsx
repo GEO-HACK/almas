@@ -34,7 +34,7 @@ type FAQProps = {
 // The shared name attribute keeps only one answer open at a time.
 export default function FAQ({ items = defaultItems }: FAQProps) {
   return (
-    <section aria-labelledby="faq-heading" className="bg-paper">
+    <section aria-labelledby="faq-heading" className="bg-surface">
       <div className="container-site grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <div>
           <h2 id="faq-heading" className="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">

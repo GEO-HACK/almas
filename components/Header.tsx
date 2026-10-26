@@ -39,7 +39,7 @@ export default function Header() {
       className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
         overHero
           ? "border-white/15 bg-transparent"
-          : "border-line bg-paper/90 backdrop-blur supports-[backdrop-filter]:bg-paper/80"
+          : "border-line bg-paper"
       }`}
     >
       <div className="container-site flex h-16 items-center justify-between gap-6 md:h-20">

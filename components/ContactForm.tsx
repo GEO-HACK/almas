@@ -107,7 +107,7 @@ export default function ContactForm() {
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-3xl border border-line bg-paper p-8 shadow-card sm:p-10"
+        className="rounded-3xl bg-paper p-8 shadow-card sm:p-10"
       >
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink" aria-hidden="true">
           <svg viewBox="0 0 20 20" className="h-6 w-6">
@@ -152,7 +152,7 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby="contact-form-heading"
-      className="rounded-3xl border border-line bg-paper p-6 shadow-card sm:p-10"
+      className="rounded-3xl bg-paper p-6 shadow-card sm:p-10"
     >
       <h2 id="contact-form-heading" className="font-display text-3xl font-semibold text-ink">
         Tell us about your property

@@ -1,56 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
+import { BuildIllustration, KeepIllustration, VerifyIllustration } from "@/components/ServiceIllustrations";
+import { services, type Service } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
     "Title verification, construction monitoring and rental management for Kenyans abroad.",
 };
-
-const services = [
-  {
-    id: "verify",
-    name: "Verify",
-    intro:
-      "Before you send a deposit, we find out whether the land is what the seller says it is, and whether anyone else has a claim on it.",
-    items: [
-      "Title and ownership search",
-      "Encumbrance and dispute check",
-      "Site and beacon visit",
-      "Written report with photos",
-    ],
-    price: "KES XX,XXX per property",
-    billing: "Single fee, paid up front",
-  },
-  {
-    id: "build",
-    name: "Build",
-    intro:
-      "We watch your construction as if it were our own, so you always know what has been built and what your money has paid for.",
-    items: [
-      "Monthly photo and drone updates",
-      "Contractor payments by milestone",
-      "Cost and materials checks",
-      "Progress reports",
-    ],
-    price: "KES XX,XXX per month",
-    billing: "Agreed per project",
-  },
-  {
-    id: "keep",
-    name: "Keep",
-    intro:
-      "Your finished property should earn for you and stay in good shape. We handle the day to day so you do not have to.",
-    items: [
-      "Tenant sourcing and vetting",
-      "Rent collection sent abroad",
-      "Repairs and caretaking",
-      "Monthly statement",
-    ],
-    price: "X% of monthly rent",
-    billing: "Billed monthly",
-  },
-];
 
 const steps = [
   {
@@ -71,112 +29,166 @@ const steps = [
   },
 ];
 
-export default function ServicesPage() {
+const illustrations: Record<Service["id"], React.ReactNode> = {
+  verify: <VerifyIllustration />,
+  build: <BuildIllustration />,
+  keep: <KeepIllustration />,
+};
+
+const themes: Record<Service["id"], { section: string; muted: string; rule: string; reverse: boolean }> = {
+  verify: { section: "bg-paper text-ink", muted: "text-muted", rule: "border-line", reverse: false },
+  build: { section: "bg-ink text-paper", muted: "text-white/70", rule: "border-white/15", reverse: true },
+  keep: { section: "bg-surface text-ink", muted: "text-muted", rule: "border-line", reverse: false },
+};
+
+function ServiceSection({ service }: { service: Service }) {
+  const theme = themes[service.id];
+
   return (
-    <>
-      <section className="border-b border-line">
-        <div className="container-site py-16 md:py-24">
-          <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-            Every stage of owning property in Kenya, covered.
-          </h1>
-          <p className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">
-            Use one service or all three. Each one is built around the same idea: you see proof
-            before you take the next step.
-          </p>
-          <nav aria-label="Services on this page" className="mt-10">
-            <ul className="flex flex-wrap gap-3">
-              {services.map((service) => (
-                <li key={service.id}>
-                  <a
-                    href={`#${service.id}`}
-                    className="inline-flex rounded-full border border-line px-5 py-2.5 font-semibold text-ink transition-colors hover:border-ink"
-                  >
-                    {service.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </section>
+    <section
+      id={service.id}
+      aria-labelledby={`${service.id}-heading`}
+      className={`scroll-mt-20 ${theme.section}`}
+    >
+      <div className="container-site py-24 md:py-32">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <Reveal className={theme.reverse ? "lg:order-2" : ""}>
+            <h2
+              id={`${service.id}-heading`}
+              className="font-display text-6xl font-semibold tracking-tight sm:text-7xl lg:text-8xl"
+            >
+              {service.name}
+            </h2>
+            <p className="mt-5 max-w-lg font-display text-2xl leading-snug sm:text-3xl">{service.promise}</p>
+            <p className={`mt-6 max-w-lg text-lg leading-relaxed ${theme.muted}`}>{service.intro}</p>
 
-      <div className="container-site space-y-6 py-16 md:py-24">
-        {services.map((service) => (
-          <section
-            key={service.id}
-            id={service.id}
-            aria-labelledby={`${service.id}-heading`}
-            className="scroll-mt-28 grid gap-10 rounded-[2rem] border border-line bg-paper p-8 shadow-card md:p-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16"
-          >
-            <div className="flex flex-col">
-              <h2 id={`${service.id}-heading`} className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
-                {service.name}
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-muted">{service.intro}</p>
-
-              <div className="mt-8 rounded-2xl bg-surface p-5 lg:mt-auto">
-                <p className="text-sm text-muted">Indicative price</p>
-                <p className="mt-2 text-lg font-semibold text-ink">
-                  From {service.price}
-                </p>
-                <p className="mt-1 text-sm text-muted">{service.billing}</p>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="sr-only">What is included</h3>
-              <ul className="divide-y divide-line border-y border-line">
-                {service.items.map((item) => (
-                  <li key={item} className="flex items-center gap-4 py-5 text-xl text-ink">
-                    <svg viewBox="0 0 20 20" className="h-6 w-6 shrink-0" aria-hidden="true">
-                      <circle cx="10" cy="10" r="9" fill="#0E0E0E" />
-                      <path d="M6 10.5l2.5 2.5L14 7.5" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link
                 href="/contact"
-                className="mt-8 inline-flex items-center gap-2 font-semibold text-ink underline decoration-accent decoration-2 underline-offset-[6px] hover:text-accent"
+                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3.5 font-semibold text-paper transition-colors hover:bg-accent-hover"
               >
                 Ask about {service.name}
               </Link>
+              <p className="text-sm">
+                <span className="block font-semibold">{service.price}</span>
+                <span className={theme.muted}>{service.billing}</span>
+              </p>
             </div>
-          </section>
-        ))}
+          </Reveal>
 
-        <p className="px-2 pt-4 text-sm text-muted">
-          Prices are indicative. Final fees are confirmed in writing
-          after your consultation.
-        </p>
-      </div>
+          <div className={theme.reverse ? "lg:order-1" : ""}>{illustrations[service.id]}</div>
+        </div>
 
-      <section aria-labelledby="how-heading" className="bg-ink text-paper">
-        <div className="container-site py-20 md:py-28">
-          <div className="max-w-2xl">
-            <h2 id="how-heading" className="font-display text-4xl font-semibold leading-tight sm:text-5xl">
-              How it works
-            </h2>
-          </div>
-
-          <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            {steps.map((step) => (
-              <li key={step.title} className="border-t border-white/20 pt-6">
-                <h3 className="font-display text-2xl font-semibold leading-snug">{step.title}</h3>
-                <p className="mt-3 leading-relaxed text-white/75">{step.body}</p>
+        <Reveal fade={false} className="mt-20">
+          <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {service.items.map((item, index) => (
+              <li
+                key={item.title}
+                className={`fade-up border-t pt-6 ${theme.rule}`}
+                style={{ "--d": `${index * 120}ms` } as React.CSSProperties}
+              >
+                <h3 className="text-lg font-semibold leading-snug">{item.title}</h3>
+                <p className={`mt-3 leading-relaxed ${theme.muted}`}>{item.body}</p>
               </li>
             ))}
-          </ol>
+          </ul>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-          <div className="mt-16">
+export default function ServicesPage() {
+  return (
+    <>
+      <section>
+        <div className="container-site py-20 md:py-28">
+          <Reveal>
+            <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+              Every stage of owning property in Kenya, covered.
+            </h1>
+            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">
+              Use one service or all three. Each one is built around the same idea: you see proof
+              before you take the next step.
+            </p>
+          </Reveal>
+
+          <Reveal delay={200}>
+            <nav aria-label="Services on this page" className="mt-12">
+              <ul className="grid gap-3 sm:grid-cols-3">
+                {services.map((service) => (
+                  <li key={service.id}>
+                    <a
+                      href={`#${service.id}`}
+                      className="group flex items-center justify-between rounded-2xl bg-surface px-6 py-5 transition-colors hover:bg-ink hover:text-paper"
+                    >
+                      <span>
+                        <span className="block font-display text-2xl font-semibold">{service.name}</span>
+                        <span className="mt-1 block text-sm text-muted transition-colors group-hover:text-white/70">
+                          {service.summary}
+                        </span>
+                      </span>
+                      <svg viewBox="0 0 20 20" className="ml-4 h-5 w-5 shrink-0 text-accent transition-transform group-hover:translate-y-0.5" aria-hidden="true">
+                        <path d="M10 4v11M5 10l5 5l5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
+        </div>
+      </section>
+
+      {services.map((service) => (
+        <ServiceSection key={service.id} service={service} />
+      ))}
+
+      <section aria-labelledby="how-heading">
+        <div className="container-site py-24 md:py-32">
+          <Reveal className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 id="how-heading" className="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+                How it works
+              </h2>
+              <p className="mt-4 max-w-xl text-lg text-muted">You stay in control at every step.</p>
+            </div>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 font-semibold text-paper transition-colors hover:bg-accent-hover"
+              className="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-7 py-4 font-semibold text-paper transition-colors hover:bg-accent-hover"
             >
               Book your free 30 minute call
             </Link>
-          </div>
+          </Reveal>
+
+          <Reveal fade={false} className="mt-16">
+            <ol className="relative grid gap-10 md:grid-cols-4 md:gap-8">
+              <span className="absolute left-0 right-0 top-[7px] hidden h-px bg-line md:block" aria-hidden="true" />
+              <span
+                className="grow-x absolute left-0 top-[6px] hidden h-[3px] w-full bg-accent md:block"
+                style={{ "--d": "200ms" } as React.CSSProperties}
+                aria-hidden="true"
+              />
+              {steps.map((step, index) => (
+                <li
+                  key={step.title}
+                  className="fade-up relative border-l border-line pl-8 md:border-l-0 md:pl-0 md:pt-12"
+                  style={{ "--d": `${300 + index * 220}ms` } as React.CSSProperties}
+                >
+                  <span
+                    className="absolute -left-[8px] top-1 h-[15px] w-[15px] rounded-full bg-ink ring-4 ring-paper md:left-0 md:top-0"
+                    aria-hidden="true"
+                  />
+                  <h3 className="font-display text-2xl font-semibold leading-snug text-ink">{step.title}</h3>
+                  <p className="mt-3 leading-relaxed text-muted">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+
+          <p className="mt-16 text-sm text-muted">
+            Prices are indicative. Final fees are confirmed in writing after your consultation.
+          </p>
         </div>
       </section>
     </>

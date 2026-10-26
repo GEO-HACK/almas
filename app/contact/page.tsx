@@ -52,12 +52,12 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-line bg-paper p-8">
+            <div className="rounded-3xl bg-paper p-8 shadow-card">
               <h2 className="font-display text-xl font-semibold text-ink">Where we are</h2>
               <p className="mt-2 text-lg text-muted">{site.location}</p>
             </div>
 
-            <div className="rounded-3xl border border-line bg-paper p-8">
+            <div className="rounded-3xl bg-paper p-8 shadow-card">
               <h2 className="font-display text-xl font-semibold text-ink">What happens next</h2>
               <p className="mt-3 leading-relaxed text-muted">
                 We reply to agree a call time. On the call we listen, answer your questions and
