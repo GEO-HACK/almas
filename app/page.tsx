@@ -1,69 +1,90 @@
-import Image from "next/image";
+import Link from "next/link";
+import Hero from "@/components/Hero";
+import ServiceCard from "@/components/ServiceCard";
+import FAQ from "@/components/FAQ";
+
+const services = [
+  {
+    name: "Verify",
+    summary: "We confirm the title, owner and boundaries are real before any money changes hands.",
+    href: "/services#verify",
+  },
+  {
+    name: "Build",
+    summary: "Monthly dated photos and payments released only when the work is really done.",
+    href: "/services#build",
+  },
+  {
+    name: "Keep",
+    summary: "Tenants found and vetted, rent sent to you abroad, repairs taken care of.",
+    href: "/services#keep",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      <Hero />
+
+      <section aria-labelledby="about-preview-heading" className="bg-ink text-paper">
+        <div className="container-site grid gap-10 py-20 md:py-28 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <h2
+              id="about-preview-heading"
+              className="font-display text-4xl font-semibold leading-tight sm:text-5xl"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              One trusted team on the ground, working for you.
+            </h2>
+          </div>
+          <div className="lg:pt-2">
+            <p className="text-xl leading-relaxed text-paper">
+              Al-Mas Advisory helps Kenyans abroad buy, build and own property at home without the
+              guesswork. Instead of juggling a cousin, a broker and a contractor who all report
+              differently, you deal with one team that checks everything and shows you the proof.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-white/75">
+              Al-Mas means diamond. We treat your trust the same way.
+            </p>
+            <Link
+              href="/about"
+              className="mt-8 inline-flex items-center gap-2 font-semibold text-paper underline decoration-accent decoration-2 underline-offset-[6px] hover:text-white/80"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Read more about us
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section aria-labelledby="services-preview-heading" className="bg-surface">
+        <div className="container-site py-20 md:py-28">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <h2
+                id="services-preview-heading"
+                className="font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl"
+              >
+                Verify. Build. Keep.
+              </h2>
+            </div>
+            <Link
+              href="/services"
+              className="inline-flex shrink-0 items-center justify-center rounded-full border border-ink px-6 py-3 font-semibold text-ink transition-colors hover:bg-ink hover:text-paper"
+            >
+              See all services
+            </Link>
+          </div>
+
+          <ul className="mt-12 grid gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <li key={service.name}>
+                <ServiceCard {...service} />
+              </li>
+            ))}
+          </ul>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <FAQ />
+    </>
   );
 }
